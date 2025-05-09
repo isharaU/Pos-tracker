@@ -10,6 +10,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -41,5 +43,13 @@ public class SaleService {
         sale.setTimestamp(LocalDateTime.now());
 
         saleRepository.save(sale);
+    }
+
+    public List<Sale> getAllSales() {
+        return new ArrayList<>();
+    }
+
+    public Sale recordSale(Sale sale) {
+        return sale;
     }
 }
