@@ -49,7 +49,6 @@ public class SaleService {
     }
 
     public Sale recordSale(Sale sale) {
-        // optional: reduce product inventory here if you want
         return saleRepository.save(sale);
     }
 
