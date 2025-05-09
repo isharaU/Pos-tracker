@@ -83,7 +83,6 @@ All protected endpoints require **Basic Authentication**.
 | admin    | adminpass | HEAD\_OFFICE\_MANAGER |
 | cashier  | pass | CASHIER               |
 
-> You can insert users manually in the `user` table.
 
 ---
 
@@ -91,35 +90,46 @@ All protected endpoints require **Basic Authentication**.
 
 ### 🧾 Products
 
-| Method | Endpoint             | Description       |
-| ------ | -------------------- | ----------------- |
-| GET    | `/api/products`      | Get all products  |
-| GET    | `/api/products/{id}` | Get product by ID |
-| PUT    | `/api/products/{id}` | Update product    |
+| Method | Endpoint             | Description       | Access Role(s)         |
+| ------ | -------------------- | ----------------- | ---------------------- |
+| GET    | `/api/products`      | Get all products  | Any authenticated user |
+| GET    | `/api/products/{id}` | Get product by ID | Any authenticated user |
+| PUT    | `/api/products/{id}` | Update product    | HEAD\_OFFICE\_MANAGER  |
 
 ---
 
-## 🕐 Scheduled Task
+### 🏪 Stores
 
-### 🧮 Hourly Sales Summary
-
-* Runs every hour (`0 0 * * * *`)
-* Calculates total sales amount per store in the past hour
-* Inserts summary into `sales_summary` table
-
-#### Optional: Manually Trigger (for testing)
-
-You can add this to a controller:
-
-```java
-@GetMapping("/manual-summary")
-public void triggerManualSummary() {
-    salesSummaryService.generateHourlySummaries();
-}
-```
+| Method | Endpoint           | Description      | Access Role(s)         |
+| ------ | ------------------ | ---------------- | ---------------------- |
+| GET    | `/api/stores`      | Get all stores   | Any authenticated user |
+| GET    | `/api/stores/{id}` | Get store by ID  | Any authenticated user |
+| POST   | `/api/stores`      | Create new store | HEAD\_OFFICE\_MANAGER  |
+| PUT    | `/api/stores/{id}` | Update store     | HEAD\_OFFICE\_MANAGER  |
+| DELETE | `/api/stores/{id}` | Delete store     | HEAD\_OFFICE\_MANAGER  |
 
 ---
 
+### 💰 Sales
+
+| Method | Endpoint          | Description     | Access Role(s)        |
+| ------ | ----------------- | --------------- | --------------------- |
+| GET    | `/api/sales`      | Get all sales   | HEAD\_OFFICE\_MANAGER |
+| POST   | `/api/sales`      | Record new sale | CASHIER               |
+| GET    | `/api/sales/{id}` | Get sale by ID  | HEAD\_OFFICE\_MANAGER |
+
+---
+
+### 📊 Sales Summary
+
+| Method | Endpoint                                  | Description                                    | Access Role(s)        |
+| ------ | ----------------------------------------- | ---------------------------------------------- | --------------------- |
+| GET    | `/api/summaries?storeId={id}&hour={hour}` | Get hourly summary for a store at a given hour | HEAD\_OFFICE\_MANAGER |
+
+**Note:**
+Sales summaries are generated automatically every hour by a scheduled job.
+
+---
 ## 🧪 Testing
 
 Use Postman or cURL with Basic Auth:
@@ -139,13 +149,5 @@ mvn clean install
 mvn spring-boot:run
 ```
 
-### Test DB Connection:
-
-```bash
-mysql -u root -p
-SHOW DATABASES;
-USE sales_tracker;
-SHOW TABLES;
-```
 
 
