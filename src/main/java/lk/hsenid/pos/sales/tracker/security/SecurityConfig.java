@@ -41,7 +41,7 @@ public class SecurityConfig {
                         .requestMatchers("/api/summaries/**").hasAuthority("HEAD_OFFICE_MANAGER")
                         .anyRequest().authenticated()
                 )
-                .httpBasic(Customizer.withDefaults()); // ✅ Spring Security 6+ style
+                .httpBasic(Customizer.withDefaults());
 
         return http.build();
     }
