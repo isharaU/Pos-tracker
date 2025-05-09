@@ -41,3 +41,5 @@ Thumbs.db
 
 # ========== Optional Docs ==========
 HELP.md
+
+*.env
