@@ -10,7 +10,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -46,10 +45,12 @@ public class SaleService {
     }
 
     public List<Sale> getAllSales() {
-        return new ArrayList<>();
+        return saleRepository.findAll();
     }
 
     public Sale recordSale(Sale sale) {
-        return sale;
+        // optional: reduce product inventory here if you want
+        return saleRepository.save(sale);
     }
+
 }
